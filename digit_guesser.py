@@ -18,7 +18,7 @@ def get_answer():
         else:
             user_input = input("Enter three numbers. No other characters. ")
 
-def is_index(q_index, a_index):
+def is_index_matched(q_index, a_index):
     if q_index == int(a_index):
         return True
     else:
@@ -33,28 +33,25 @@ def is_close(question_numbers, answer_numbers):
 def is_match(question_numbers, answer_numbers):
     q = question_numbers
     a = answer_numbers
-    return is_index(q[0], a[0]) or is_index(q[1], a[1]) or is_index(q[2], a[2])
+    return is_index_matched(q[0], a[0]) or is_index_matched(q[1], a[1]) or is_index_matched(q[2], a[2])
 
 def is_perfect_match(question_numbers, answer_numbers):
     q = question_numbers
     a = answer_numbers
-    return is_index(q[0], a[0]) and is_index(q[1], a[1]) and is_index(q[2], a[2])
+    return is_index_matched(q[0], a[0]) and is_index_matched(q[1], a[1]) and is_index_matched(q[2], a[2])
 
-def checking_results(question_numbers, answer_numbers):
+def is_result_correct(question_numbers, answer_numbers):
     if is_perfect_match(question_numbers, answer_numbers):
         print("Perfect Match")
         return True
-    else:
-        if is_match(question_numbers, answer_numbers):
-            print("Match")
-            return False
-        else:
-            if is_close(question_numbers, answer_numbers):
-                print("Close")
-                return False
-            else:
-                print("Close")
-                return False
+    elif is_match(question_numbers, answer_numbers):
+        print("Match")
+        return False
+    elif is_close(question_numbers, answer_numbers):
+        print("Close")
+        return False
+    print("Nope")
+    return False
 
 
 intro = """Welcome to 'Digit Guesser'!
@@ -74,7 +71,7 @@ answer = get_answer()
 tries = 20
 
 
-while not checking_results(question, answer) or tries != 0:
+while not is_result_correct(question, answer) and tries != 0:
     tries -= 1
     if tries == 0:
         print("Oups... too many wrong guesses.")
